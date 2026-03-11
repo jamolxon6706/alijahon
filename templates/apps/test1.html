@@ -1,0 +1,423 @@
+<style>
+        :root {
+            --primary-color: #4f46e5;
+            --primary-dark: #4338ca;
+            --primary-light: #818cf8;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #3b82f6;
+            --dark-bg: #1e293b;
+            --light-bg: #f8fafc;
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --card-shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        * {
+            transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f8fafc;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+        }
+
+        .card:hover {
+            box-shadow: var(--card-shadow-hover);
+            transform: translateY(-4px);
+        }
+
+        .btn {
+            border-radius: 12px;
+            padding: 10px 24px;
+            font-weight: 600;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4);
+        }
+
+        .form-control, .form-select {
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            padding: 12px 16px;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .table {
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .table thead {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .card {
+                margin-bottom: 20px;
+            }
+
+            .btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .table {
+                font-size: 12px;
+            }
+
+            .col-md-3, .col-md-9 {
+                padding: 0 10px;
+            }
+        }
+    </style>
+
+<style>
+    .modern-header {
+        background: white;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .modern-navbar {
+        padding: 0;
+    }
+
+    .navbar-brand-modern {
+        padding: 12px 0;
+    }
+
+    .navbar-brand-modern img {
+        height: 45px;
+        width: auto;
+        transition: transform 0.3s ease;
+    }
+
+    .navbar-brand-modern:hover img {
+        transform: scale(1.05);
+    }
+
+    .nav-link-modern {
+        padding: 20px 16px !important;
+        font-weight: 600;
+        color: #475569 !important;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .nav-item.dropdown.mega-menu {
+        position: static;
+    }
+
+    .nav-item.dropdown.profile-dropdown-nav {
+        position: relative;
+    }
+
+    .nav-link-modern::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 3px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        transition: width 0.3s ease;
+    }
+
+    .nav-link-modern:hover,
+    .nav-link-modern.active {
+        color: #667eea !important;
+    }
+
+    .nav-link-modern:hover::after {
+        width: 80%;
+    }
+
+    .search-box-header {
+        position: relative;
+        width: 400px;
+        max-width: 100%;
+    }
+
+    .search-box-header input {
+        width: 100%;
+        padding: 10px 45px 10px 20px;
+        border: 2px solid #e2e8f0;
+        border-radius: 30px;
+        transition: all 0.3s ease;
+    }
+
+    .search-box-header input:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        outline: none;
+    }
+
+    .search-box-header button {
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        color: white;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .profile-dropdown-modern {
+        border-radius: 16px !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+        border: none !important;
+        padding: 8px 0;
+        margin-top: 10px;
+        min-width: 250px;
+        right: 0 !important;
+        left: auto !important;
+    }
+
+    .dropdown-item-modern {
+        padding: 12px 24px;
+        font-weight: 500;
+        color: #475569;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .dropdown-item-modern i {
+        width: 20px;
+        font-size: 18px;
+        color: #667eea;
+    }
+
+    .dropdown-item-modern:hover {
+        background: linear-gradient(90deg, rgba(102, 126, 234, 0.08) 0%, transparent 100%);
+        color: #667eea;
+    }
+
+    .profile-pic-modern {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        border: 2px solid #667eea;
+        object-fit: cover;
+    }
+
+    .mega-dropdown-modern {
+        border-radius: 16px !important;
+        border: none !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+        padding: 30px 20px !important;
+        margin-top: 10px !important;
+        width: 90% !important;
+        max-width: 1200px !important;
+        left: 5% !important;
+        right: 5% !important;
+    }
+
+    .mega-list-modern {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .mega-list-modern a {
+        padding: 8px 12px;
+        color: #475569;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        font-size: 13px;
+        white-space: nowrap;
+        display: block;
+    }
+
+    .mega-list-modern a:hover {
+        background: linear-gradient(90deg, rgba(102, 126, 234, 0.08) 0%, transparent 100%);
+        color: #667eea;
+        transform: translateX(4px);
+    }
+
+    .dropdown-toggle::after {
+        display: none;
+    }
+
+    .navbar-toggler-modern {
+        border: 2px solid #667eea;
+        padding: 8px 12px;
+        border-radius: 8px;
+    }
+
+    @media (max-width: 992px) {
+        .search-box-header {
+            width: 100%;
+            margin: 16px 0;
+        }
+
+        .nav-link-modern {
+            padding: 12px 16px !important;
+        }
+
+        .nav-link-modern::after {
+            display: none;
+        }
+
+        .mega-dropdown-modern {
+            min-width: 100% !important;
+            left: 0 !important;
+            transform: none !important;
+            padding: 16px !important;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .mega-dropdown-modern .row {
+            flex-direction: column;
+        }
+
+        .mega-dropdown-modern .col-lg-2 {
+            width: 100%;
+        }
+    }
+</style>
+
+<div class="container text-center pb-5 card" style="margin-top: 80px;">
+    <div class="card-body" style="margin-top: 30px">
+
+    </div>
+
+    <img style="height: 100px; width:100px; margin-left:45%; margin-top: 30px" src="/static/apps/success_icon.png"
+         alt="Green Success Image">
+    <h3 class="mt-4">Arizangiz qabul qilindi!</h3>
+    <p>Batafsil ma'lumot uchun operator yaqin vaqt ichida siz bilan aloqaga chiqadi.</p>
+    <p>Iltimos, telefoningiz yoqilgan holda bo'lsin!</p>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Mahsulot</th>
+            <th scope="col">Summa</th>
+            <th scope="col">Soni</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="col">Kinetik qum bolajonlar uchun</th>
+            <th scope="col">119&nbsp;000</th>
+            <th scope="col">1</th>
+        </tr>
+
+
+        </tbody>
+    </table>
+    <b>Yetkazib berish narxi adresga qarab o'zgaradi</b>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h5>Jami</h5>
+            <h5>119&nbsp;000 so'm</h5>
+        </div>
+        <div class="col-md-6 mt-3">
+            <a href="/" class="btn btn-primary w-50">Boshqa mahsulotlar</a>
+        </div>
+    </div>
+</div>
+
+
+<div class="col-md-6">
+                <div class="shop-detail-right">
+                    <div class="border rounded shadow-sm bg-white p-4">
+                        <div class="product-name">
+                            <!-- <p class="text-danger text-uppercase mb-0"> <i class="icofont-sale-discount"></i> 50% Off</p> -->
+                            <h2>Kinetik qum bolajonlar uchun</h2>
+                        </div>
+                        <div class="price-box">
+                            <h5>
+
+                                    <span class="product-price text-danger" id="dynamic-price">89&nbsp;000 so'm</span>
+
+                            </h5>
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <div class="product-variation">
+                            <form method="post">
+                                <input type="hidden" name="csrfmiddlewaretoken" value="qA1a9dDWOjDlXkPGFE13unkuBcJFYnuUgEGVJ6DgXrWcDDe5kAUaKCNIqF9P3NM5">
+                                <div class="controls">
+                                    <label>Ism <span class="text-danger">*</span></label>
+                                    <input type="text" placeholder="Ism" class="form-control" name="full_name" required="" maxlength="200" pattern="^[a-zA-Z0-9\sа-яА-ЯёЁўЎқҚғҒҳҲ]+$" oninput="this.value = this.value.replace(/[^a-zA-Z0-9\sа-яА-ЯёЁўЎқҚғҒҳҲ]/g, '')" title="Faqat harf va raqam kiritish mumkin">
+                                    <p class="help-block"></p>
+                                </div>
+                                <div class="controls">
+                                    <label>Telefon <span class="text-danger">*</span></label>
+                                    <input type="text" placeholder="+998 (__) ___-__-__" class="form-control" id="phone-mask-two" data-phone-mask="uz" inputmode="numeric" autocomplete="tel" required="" name="phone_number">
+                                    <p class="help-block"></p>
+                                </div>
+
+
+
+                                <label for="quantity">Soni :</label>
+                                <select name="quantity" id="quantity" data-select2-id="quantity" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+                                    <option value="1" data-select2-id="2">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                </select><span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="1" style="width: 38.2833px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-quantity-container"><span class="select2-selection__rendered" id="select2-quantity-container" role="textbox" aria-readonly="true" title="1">1</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                <span class="float-right">
+                              <button type="submit" class="btn btn-primary btn-lg">&nbsp;&nbsp;&nbsp; <i class="icofont icofont-shopping-cart"></i> Buyurtma berish &nbsp;&nbsp;&nbsp;</button>
+                              </span>
+                            </form>
+                        </div>
+                        Yetkazib berish O'zbekiston bo'ylab 30 000 so'm
+                    </div>
+                </div>
+            </div>

@@ -1,0 +1,246 @@
+{% extends 'apps/base/base.html' %}
+
+{% block body %}
+    <style>
+        .sidebar-modern {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            position: sticky;
+            top: 20px;
+        }
+
+        .user-profile-modern {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .user-profile-modern::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.4;
+        }
+
+        .user-avatar-modern {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            object-fit: cover;
+            position: relative;
+            z-index: 1;
+        }
+
+        .user-info-modern {
+            color: white;
+            margin-top: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .user-info-modern h6 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .user-info-modern p {
+            font-size: 13px;
+            opacity: 0.95;
+            margin-bottom: 4px;
+        }
+
+        .nav-modern {
+            padding: 10px 0;
+        }
+
+        .nav-modern .nav-item {
+            margin: 0;
+        }
+
+        .nav-modern .nav-link {
+            color: #64748b;
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            font-size: 15px;
+            border-left: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .nav-modern .nav-link i {
+            font-size: 20px;
+            margin-right: 12px;
+            width: 24px;
+            text-align: center;
+        }
+
+        .nav-modern .nav-link:hover,
+        .nav-modern .nav-link.active {
+            background: linear-gradient(90deg, rgba(102, 126, 234, 0.08) 0%, transparent 100%);
+            color: #667eea;
+            border-left-color: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar-modern {
+                margin-bottom: 20px;
+                position: static;
+            }
+
+            .user-profile-modern {
+                padding: 20px 15px;
+            }
+
+            .user-avatar-modern {
+                width: 80px;
+                height: 80px;
+            }
+
+            .user-info-modern h6 {
+                font-size: 16px;
+            }
+
+            .user-info-modern p {
+                font-size: 12px;
+            }
+
+            .nav-modern .nav-link {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+
+            .nav-modern .nav-link i {
+                font-size: 18px;
+                margin-right: 10px;
+            }
+        }
+    </style>
+    <div class="container settings-container">
+        <div class="row">
+
+            <div class="col-md-3 mb-4">
+                <div class="sidebar-modern">
+                    <div class="user-profile-modern">
+                        <img width="85" height="85" src="https://img.icons8.com/pastel-glyph/64/user-male-circle.png"
+                             alt="user-male-circle"/>
+                        <div class="user-info-modern">
+                            <h6>{{ request.user.first_name|default:'' }}</h6>
+                            <p>{{ request.user.phone_number|default:'' }}</p>
+                            <p></p>
+                        </div>
+                    </div>
+                    <ul class="nav nav-modern flex-column" id="myTab" role="tablist">
+
+                        <li class="nav-item">
+                            <a href="{% url 'profile' %}" class="nav-link" role="tab">
+                                <i class="fa-solid fa-user"></i>
+                                <span>Mening kabinetim</span>
+                            </a>
+                        </li>
+
+
+
+                        <li class="nav-item">
+                            <a class="nav-link " href="{% url 'market' 0 %}">
+                                <i class="fa fa-store"></i>
+                                <span>Market</span>
+                            </a>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a href="/admin_page/stats" class="nav-link ">
+                                <i class="fa-solid fa-chart-line"></i>
+                                <span> Statistika</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="/admin_page/competition">
+                                <i class="fa-solid fa-trophy"></i>
+                                <span> Konkurs</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="/admin_page/withdraw">
+                                <i class="fa-solid fa-sack-dollar"></i>
+                                <span>To'lov</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'order-history' %}" class="nav-link" role="tab">
+                                <i class="fa-solid fa-list"></i>
+                                <span>Buyurtmalar tarixi</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="/profile/settings">
+                                <i  class="fa-solid fa-gears"></i>
+                                <span>Sozlamalar</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            {% block seller_base %}
+
+            {% endblock %}
+        </div>
+    </div>
+    {% comment %}
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const regionEl = document.getElementById("id_region");
+            const districtEl = document.getElementById("id_district");
+            if (!regionEl || !districtEl) return;
+
+            async function loadDistricts(regionId, selectedId = "") {
+                districtEl.innerHTML = '<option value="">---------</option>';
+                if (!regionId) return;
+
+                const res = await fetch(`/ajax/districts/${regionId}/`);
+                if (!res.ok) {
+                    console.error("district fetch error:", res.status);
+                    return;
+                }
+
+                const data = await res.json();
+
+                for (const d of data) {
+                    const opt = document.createElement("option");
+                    opt.value = d.id;
+                    opt.textContent = d.title;
+
+                    if (selectedId && String(d.id) === String(selectedId)) {
+                        opt.selected = true;
+                    }
+
+                    districtEl.appendChild(opt);
+                }
+            }
+
+            // ✅ 1) Sahifa ochilganda ham (oldingi qiymatni selected qilib) yuklasin
+            const selectedDistrictId = (districtEl.dataset.selected || "").trim();
+            if (regionEl.value) {
+                loadDistricts(regionEl.value, selectedDistrictId);
+            }
+
+            // ✅ 2) Region o'zgarsa districtlar yangilansin
+            regionEl.addEventListener("change", () => {
+                districtEl.dataset.selected = ""; // eski district endi mos emas
+                loadDistricts(regionEl.value, "");
+            });
+        });
+    </script>
+    {% endcomment %}
+{% endblock %}

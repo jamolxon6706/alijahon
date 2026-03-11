@@ -1,0 +1,47 @@
+{% extends 'apps/base/seller_base.html' %}
+
+{% block seller_base %}
+
+    <div class="col-md-9">
+        <div class="requests-card">
+            <div class="requests-header">
+                <h3>
+                    <i class="icofont-list"></i> So'rovnomalar
+                </h3>
+            </div>
+
+            <div class="table-responsive">
+                <div class="dataTables_wrapper dt-bootstrap4 no-footer">
+
+                    <table class="table-modern">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Operator</th>
+                            <th>Sana</th>
+                            <th>Oqim</th>
+                            <th>Haridor</th>
+                            <th>Viloyat</th>
+                            <th>Telefon</th>
+                            <th>Holati</th>
+                            <th>Izoh</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr>
+                            <td colspan="8" style="text-align: center; padding: 40px; color: #64748b;">
+                                <i class="icofont-list"
+                                   style="font-size: 48px; display: block; margin-bottom: 16px;"></i>
+                                <strong>Hozircha so'rovnomalar mavjud emas</strong>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

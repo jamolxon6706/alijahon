@@ -1,0 +1,241 @@
+{% extends 'apps/base/base.html' %}
+
+{% block body %}
+    <style>
+        :root {
+            --primary: #5B4BFF;
+            --accent-start: #6C63FF;
+            --accent-end: #4A3BFF;
+            --success: #22C55E;
+            --page-bg: #F8F9FF;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --card-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+        }
+
+        .checkout-success {
+            background: radial-gradient(circle at top left, rgba(108, 99, 255, 0.12), transparent 50%),
+                        radial-gradient(circle at top right, rgba(74, 59, 255, 0.12), transparent 45%),
+                        var(--page-bg);
+            padding: 70px 0 90px;
+        }
+
+        .success-card {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            padding: 44px;
+            text-align: center;
+        }
+
+        .success-icon {
+            width: 86px;
+            height: 86px;
+            border-radius: 28px;
+            background: rgba(34, 197, 94, 0.12);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+        }
+
+        .success-icon svg {
+            width: 44px;
+            height: 44px;
+            color: var(--success);
+        }
+
+        .success-title {
+            font-size: 30px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin: 6px 0 12px;
+        }
+
+        .success-subtitle {
+            color: var(--text-muted);
+            font-size: 15px;
+            max-width: 640px;
+            margin: 0 auto 12px;
+        }
+
+        .success-note {
+            font-size: 13px;
+            color: #94a3b8;
+            margin-bottom: 26px;
+        }
+
+        .order-summary {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 18px;
+            text-align: left;
+            margin: 24px 0;
+        }
+
+        .order-summary table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .order-summary thead th {
+            color: #475569;
+            font-weight: 700;
+            padding-bottom: 10px;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 0.06em;
+        }
+
+        .order-summary tbody td {
+            padding: 12px 0;
+            color: var(--text-dark);
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .delivery-note {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 12px;
+        }
+
+        .total-box {
+            margin: 22px 0 28px;
+            background: linear-gradient(135deg, rgba(108, 99, 255, 0.12), rgba(74, 59, 255, 0.12));
+            border-radius: 14px;
+            padding: 18px 20px;
+            display: inline-flex;
+            gap: 10px;
+            align-items: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .total-box span {
+            color: var(--primary);
+            font-size: 22px;
+        }
+
+        .success-actions {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary-modern {
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            color: #ffffff;
+            border: none;
+            border-radius: 14px;
+            padding: 12px 26px;
+            font-weight: 600;
+            box-shadow: 0 10px 18px rgba(91, 75, 255, 0.25);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-primary-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 24px rgba(91, 75, 255, 0.3);
+            color: #ffffff;
+        }
+
+        .btn-secondary-modern {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            color: #475569;
+            border-radius: 14px;
+            padding: 12px 26px;
+            font-weight: 600;
+            transition: border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .btn-secondary-modern:hover {
+            border-color: #c7d2fe;
+            color: #4338ca;
+        }
+
+        @media (max-width: 768px) {
+            .success-card {
+                padding: 32px 22px;
+            }
+
+            .success-title {
+                font-size: 24px;
+            }
+
+            .order-summary {
+                padding: 14px;
+            }
+
+            .total-box {
+                font-size: 16px;
+            }
+
+            .success-actions {
+                flex-direction: column;
+            }
+
+            .btn-primary-modern,
+            .btn-secondary-modern {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+
+    <section class="checkout-success">
+        <div class="container">
+            <div class="success-card">
+                <div class="success-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M8 12l2.5 2.5L16 9"></path>
+                    </svg>
+                </div>
+                <h1 class="success-title">Arizangiz qabul qilindi!</h1>
+                <p class="success-subtitle">
+                    Operatorlarning ish vaqti 9:00 dan 23:00 gacha. Kunduzgi vaqt ichida siz bilan aloqaga chiqamiz.
+                    E'tiboringiz uchun rahmat.
+                </p>
+                <p class="success-note">Iltimos, telefoningiz yoqilgan holda bo'lsin.</p>
+
+                <div class="order-summary">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Mahsulot</th>
+                            <th>Summa</th>
+                            <th>Soni</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{{ order.product.title }}</td>
+                            <td>{{ order.product.price }} so'm</td>
+                            <td>{{ order.quantity }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="delivery-note">Yetkazib berish narxi adresga qarab o'zgaradi</div>
+                </div>
+
+                <div class="total-box">
+                    Jami:
+                    <span>{{ total }} so'm</span>
+                </div>
+
+                <div class="success-actions">
+                    <a href="{% url 'order-history' %}" class="btn-primary-modern">Buyurtmani kuzatish</a>
+                    <a href="{% url 'product_list_all' %}" class="btn-secondary-modern">Boshqa mahsulotlar</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

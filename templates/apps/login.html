@@ -1,0 +1,66 @@
+{% extends 'apps/base/base.html' %}
+{% block body %}
+
+<style>
+  /* Faqat login sahifa */
+  .auth-offset {
+    padding-top: 90px;   /* header balandligiga qarab 70-120 oralig'ida o'zgartir */
+    padding-bottom: 40px;
+  }
+</style>
+<div class="page-wrapper">
+    <div class="container auth-container">
+        <div class="card auth-card">
+
+            <h3 class="auth-title text-center">Login</h3>
+
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger py-2 mb-3">
+                    {% for err in form.non_field_errors %}
+                        <div>{{ err }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label>Telefon</label>
+                    <input type="text"
+                           name="phone_number"
+                           class="form-control auth-input"
+                           data-phone-mask="uz"
+                           inputmode="numeric"
+                           autocomplete="tel"
+                           placeholder="+998 (__) ___-__-__"
+                           value="{{ form.phone_number.value|default:'+998' }}"
+                           required>
+                    {% if form.phone_number.errors %}
+                        <div class="text-danger small mt-1">{{ form.phone_number.errors|striptags }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-4">
+                    <label>Parol</label>
+                    <input type="password"
+                           name="password"
+                           class="form-control auth-input"
+                           placeholder="Parol"
+                           required>
+                    {% if form.password.errors %}
+                        <div class="text-danger small mt-1">{{ form.password.errors|striptags }}</div>
+                    {% endif %}
+                </div>
+
+                <button class="btn btn-primary w-100 auth-btn">
+                    Kirish
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

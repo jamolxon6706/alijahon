@@ -1,0 +1,54 @@
+{% extends 'apps/base/base.html' %}
+{% load static %}
+
+{% block body %}
+
+<div class="container auth-container">
+    <div class="card auth-card">
+
+        <h3 class="auth-title text-center">OTP tasdiqlash</h3>
+        <p class="text-center text-muted mb-3">Kod {{ phone }} raqamiga yuboriladi (hozircha vaqtinchalik).</p>
+        <div class="alert alert-info py-2 text-center">
+            Vaqtinchalik OTP: <strong>{{ otp_code }}</strong>
+        </div>
+
+        {% if register_errors %}
+            <div class="alert alert-danger py-2 mb-3">
+                {% for field, errors in register_errors.items %}
+                    <div>{{ errors|striptags }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="post" action="{% url 'register-otp' %}">
+            {% csrf_token %}
+
+            <div class="form-group mb-4">
+                <label>OTP kodi</label>
+                <input type="text"
+                       name="otp_code"
+                       class="form-control auth-input"
+                       inputmode="numeric"
+                       autocomplete="one-time-code"
+                       placeholder="6 xonali kod"
+                       maxlength="6"
+                       required>
+                {% if form.otp_code.errors %}
+                    <div class="text-danger small mt-1">{{ form.otp_code.errors|striptags }}</div>
+                {% endif %}
+            </div>
+
+            <button class="btn btn-primary w-100 auth-btn">
+                Tasdiqlash
+            </button>
+
+        </form>
+
+        <div class="text-center mt-4">
+            <a href="{% url 'register' %}">Telefonni o'zgartirish</a>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

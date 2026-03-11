@@ -1,0 +1,529 @@
+{% load static %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.js"></script>
+
+<script>
+    (function () {
+        const $phoneFields = $('[data-phone-mask="uz"]');
+        if (!$phoneFields.length || typeof $phoneFields.inputmask !== "function") {
+            return;
+        }
+        $phoneFields.inputmask({
+            mask: "+\\9\\98(99) 999-99-99",
+            showMaskOnHover: false,
+            showMaskOnFocus: true,
+            clearMaskOnLostFocus: false,
+            placeholder: "_",
+            onBeforeMask: function (value) {
+                const digits = String(value || "").replace(/\D/g, "");
+                return digits.startsWith("998") ? digits.slice(3) : digits;
+            }
+        });
+    })();
+</script>
+
+{#==========================#}
+
+<script>
+    (function () {
+        const carousel = document.getElementById('heroCarousel');
+        if (!carousel) return;
+        const slides = carousel.querySelectorAll('.banner-item');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const bar = document.getElementById('progressBar');
+        if (!slides.length || !prevBtn || !nextBtn || !bar) return;
+        const DELAY = 5000; // 5 soniya
+
+        let current = 0, autoTimer = null;
+
+        function goTo(index) {
+            slides[current].classList.remove('active');
+            current = (index + slides.length) % slides.length;
+            slides[current].classList.add('active');
+            carousel.style.transform = `translateX(-${current * 100}%)`;
+            restartProgress();
+        }
+
+        function restartProgress() {
+            clearTimeout(autoTimer);
+            bar.style.transition = 'none';
+            bar.style.width = '0%';
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+                bar.style.transition = `width ${DELAY}ms linear`;
+                bar.style.width = '100%';
+            }));
+            autoTimer = setTimeout(() => goTo(current + 1), DELAY);
+        }
+
+        prevBtn.onclick = () => goTo(current - 1);
+        nextBtn.onclick = () => goTo(current + 1);
+
+        // Klaviatura
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowLeft') goTo(current - 1);
+            if (e.key === 'ArrowRight') goTo(current + 1);
+        });
+
+        // Touch / swipe
+        let touchX = 0;
+        carousel.addEventListener('touchstart', e => {
+            touchX = e.touches[0].clientX;
+        }, {passive: true});
+        carousel.addEventListener('touchend', e => {
+            const dx = e.changedTouches[0].clientX - touchX;
+            if (Math.abs(dx) > 50) goTo(current + (dx < 0 ? 1 : -1));
+        });
+
+        restartProgress(); // Boshlash
+    })();
+</script>
+
+
+{#========== header script ================#}
+
+<script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/static/apps/js/sw.js')
+            .then(function (reg) {
+                console.log("Service Worker ro'yxatdan o'tdi!", reg);
+            })
+            .catch(function (err) {
+                console.log("Service Worker xatosi!", err);
+            });
+    }
+</script>
+
+{#=============  footer script ==============#}
+
+<!-- Bootstrap core JavaScript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{% static 'apps/bootstrap.bundle.min.js' %}"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="{% static 'apps/custom.js' %}"></script>
+<!-- Contact form JavaScript -->
+<!-- Do not edit these files! In order to set the email address and subject line for the contact form go to the bin/contact_me.php file. -->
+<script src="{% static 'apps/jqBootstrapValidation.js' %}"></script>
+<script src="{% static 'apps/contact_me.js' %}"></script>
+<!-- Owl Carousel -->
+<script src="{% static 'apps/owl.carousel.js' %}"></script>
+
+
+<script>
+    $(document).ready(function () {
+        if (!$.fn.owlCarousel) {
+            return;
+        }
+
+        const $categoryCarousel = $('.owl-carousel-category');
+        if ($categoryCarousel.length) {
+            $categoryCarousel.owlCarousel({
+                loop: false,
+                margin: 15,
+                nav: true,
+                dots: false,
+                responsive: {
+                    0: {items: 2},
+                    576: {items: 3},
+                    768: {items: 4},
+                    992: {items: 5}
+                }
+            });
+        }
+
+        const $newProductsCarousel = $('.owl-new-products');
+        if ($newProductsCarousel.length) {
+            const totalItems = $newProductsCarousel.find('.item').length;
+            const AUTO_DELAY = 4000;
+
+            $newProductsCarousel.owlCarousel({
+                items: 5,
+                itemsDesktop: [1200, 4],
+                itemsDesktopSmall: [992, 3],
+                itemsTablet: [768, 2],
+                itemsMobile: [479, 1],
+                slideSpeed: 600,
+                paginationSpeed: 600,
+                autoPlay: totalItems > 1 ? AUTO_DELAY : false,
+                stopOnHover: false,
+                navigation: true,
+                pagination: true,
+                navigationText: [
+                    '<span style="line-height:1;margin-top:-2px;">&#8249;</span>',
+                    '<span style="line-height:1;margin-top:-2px;">&#8250;</span>'
+                ]
+            });
+        }
+    });
+</script>
+
+
+{#=========  category uchun hover =================#}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const root = document.querySelector('.mega-menu-custom');
+        if (!root) return;
+
+        const btn = root.querySelector('.mega-toggle');
+        const panel = root.querySelector('.mega-panel');
+        if (!btn || !panel) return;
+
+        function openMenu() {
+            root.classList.add('is-open');
+            btn.setAttribute('aria-expanded', 'true');
+            panel.setAttribute('aria-hidden', 'false');
+        }
+
+        function closeMenu() {
+            root.classList.remove('is-open');
+            btn.setAttribute('aria-expanded', 'false');
+            panel.setAttribute('aria-hidden', 'true');
+        }
+
+        function toggleMenu(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            root.classList.contains('is-open') ? closeMenu() : openMenu();
+        }
+
+        btn.addEventListener('click', toggleMenu);
+
+        // panel ichida bosilganda yopilmasin
+        panel.addEventListener('click', function (e) {
+            e.stopPropagation();
+        });
+
+        // tashqariga bosilsa yopilsin
+        document.addEventListener('click', function (e) {
+            if (!root.contains(e.target)) closeMenu();
+        });
+
+        // ESC
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeMenu();
+        });
+    });
+</script>
+
+<script>
+    (function () {
+        const toggleUrl = "{% url 'wishlist-toggle' %}";
+        const registerUrl = "{% url 'register' %}";
+
+        function getCookie(name) {
+            const value = '; ' + document.cookie;
+            const parts = value.split('; ' + name + '=');
+            if (parts.length === 2) {
+                return parts.pop().split(';').shift();
+            }
+            return '';
+        }
+
+        function setState(btn, isActive) {
+            btn.classList.toggle('is-active', isActive);
+            btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+            const icon = btn.querySelector('i');
+            if (icon) {
+                icon.classList.toggle('fas', isActive);
+                icon.classList.toggle('far', !isActive);
+            }
+        }
+
+        function escapeSelector(value) {
+            if (window.CSS && typeof CSS.escape === 'function') {
+                return CSS.escape(value);
+            }
+            return String(value).replace(/"/g, '\\"');
+        }
+
+        function syncButtonsForId(id, isActive) {
+            const selector = '.wishlist-btn[data-product-id="' + escapeSelector(id) + '"]';
+            document.querySelectorAll(selector).forEach(function (btn) {
+                setState(btn, isActive);
+            });
+        }
+
+        function syncAllButtons() {
+            document.querySelectorAll('.wishlist-btn').forEach(function (btn) {
+                setState(btn, btn.classList.contains('is-active'));
+            });
+        }
+
+        function toggleWishlist(btn) {
+            const productId = btn.dataset.productId ? String(btn.dataset.productId) : '';
+            if (!productId) {
+                setState(btn, !btn.classList.contains('is-active'));
+                return;
+            }
+
+            const body = new URLSearchParams({product_id: productId});
+
+            fetch(toggleUrl, {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                    'X-CSRFToken': getCookie('csrftoken'),
+                },
+                body: body.toString(),
+            })
+                .then(function (res) {
+                    if (res.status === 401) {
+                        const next = encodeURIComponent(window.location.pathname + window.location.search);
+                        window.location.href = registerUrl + '?next=' + next;
+                        return null;
+                    }
+                    if (!res.ok) {
+                        throw new Error('wishlist_failed');
+                    }
+                    return res.json();
+                })
+                .then(function (data) {
+                    if (!data) return;
+                    syncButtonsForId(String(data.product_id), !!data.liked);
+                })
+                .catch(function () {
+                    /* no-op */
+                });
+        }
+
+        function initWishlist() {
+            syncAllButtons();
+
+            document.addEventListener('click', function (e) {
+                const btn = e.target.closest('.wishlist-btn');
+                if (!btn) return;
+                e.preventDefault();
+                e.stopPropagation();
+                toggleWishlist(btn);
+            });
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initWishlist);
+        } else {
+            initWishlist();
+        }
+    })();
+</script>
+
+<script>
+    (function () {
+        const CART_FORM_SELECTOR = 'form[action$="/cart/add/"]';
+        const SUCCESS_MESSAGE = "Savatga saqlandi";
+        const CONFIRM_MESSAGE = "Rostdan ham savatga saqlaysizmi?";
+        const LOADING_MESSAGE = "Saqlanmoqda...";
+        const CONFIRM_TITLE = "Tasdiqlash";
+        const SUCCESS_SUBTITLE = "Mahsulot savatga qo'shildi.";
+
+        function getCookie(name) {
+            const value = '; ' + document.cookie;
+            const parts = value.split('; ' + name + '=');
+            if (parts.length === 2) {
+                return parts.pop().split(';').shift();
+            }
+            return '';
+        }
+
+        function ensureToast() {
+            let backdrop = document.getElementById('cartToastBackdrop');
+            if (backdrop) return backdrop;
+
+            backdrop = document.createElement('div');
+            backdrop.id = 'cartToastBackdrop';
+            backdrop.className = 'cart-toast-backdrop';
+            backdrop.innerHTML = '' +
+                '<div class="cart-toast" role="dialog" aria-modal="true" data-variant="success">' +
+                '  <div class="cart-toast-icon" aria-hidden="true"><i class="fas fa-check"></i></div>' +
+                '  <div class="cart-toast-title" id="cartToastTitle"></div>' +
+                '  <div class="cart-toast-sub" id="cartToastSub"></div>' +
+                '  <div class="cart-toast-actions" id="cartToastActions"></div>' +
+                '</div>';
+
+            document.body.appendChild(backdrop);
+
+            backdrop.addEventListener('click', function (e) {
+                if (e.target === backdrop) {
+                    backdrop.classList.remove('is-visible');
+                }
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') {
+                    backdrop.classList.remove('is-visible');
+                }
+            });
+
+            return backdrop;
+        }
+
+        function setToastContent(payload) {
+            const backdrop = ensureToast();
+            const toast = backdrop.querySelector('.cart-toast');
+            const title = backdrop.querySelector('#cartToastTitle');
+            const sub = backdrop.querySelector('#cartToastSub');
+            const actions = backdrop.querySelector('#cartToastActions');
+            const iconWrap = backdrop.querySelector('.cart-toast-icon');
+
+            if (toast && payload.variant) {
+                toast.setAttribute('data-variant', payload.variant);
+            }
+            if (iconWrap && payload.iconClass) {
+                iconWrap.innerHTML = '<i class="' + payload.iconClass + '"></i>';
+            }
+            if (title) {
+                title.textContent = payload.title || '';
+            }
+            if (sub) {
+                sub.textContent = payload.sub || '';
+                sub.style.display = payload.sub ? 'block' : 'none';
+            }
+            if (actions) {
+                actions.innerHTML = '';
+                (payload.actions || []).forEach(function (action) {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'btn cart-toast-btn ' + (action.className || '');
+                    btn.textContent = action.label;
+                    btn.addEventListener('click', function () {
+                        if (action.onClick) action.onClick();
+                    });
+                    actions.appendChild(btn);
+                });
+            }
+            backdrop.classList.add('is-visible');
+            return backdrop;
+        }
+
+        function showSuccessToast() {
+            setToastContent({
+                variant: 'success',
+                iconClass: 'fas fa-check',
+                title: SUCCESS_MESSAGE,
+                sub: SUCCESS_SUBTITLE,
+                actions: [
+                    {
+                        label: 'OK',
+                        className: 'primary',
+                        onClick: function () {
+                            const backdrop = document.getElementById('cartToastBackdrop');
+                            if (backdrop) backdrop.classList.remove('is-visible');
+                        },
+                    },
+                ],
+            });
+        }
+
+        function showConfirmToast(onConfirm) {
+            setToastContent({
+                variant: 'confirm',
+                iconClass: 'fas fa-circle-question',
+                title: CONFIRM_TITLE,
+                sub: CONFIRM_MESSAGE,
+                actions: [
+                    {
+                        label: 'Ha, saqlayman',
+                        className: 'primary',
+                        onClick: function () {
+                            const backdrop = document.getElementById('cartToastBackdrop');
+                            if (backdrop) backdrop.classList.remove('is-visible');
+                            onConfirm();
+                        },
+                    },
+                    {
+                        label: 'Bekor qilish',
+                        className: 'ghost',
+                        onClick: function () {
+                            const backdrop = document.getElementById('cartToastBackdrop');
+                            if (backdrop) backdrop.classList.remove('is-visible');
+                        },
+                    },
+                ],
+            });
+        }
+
+        function updateCartBadge(count) {
+            const cartLink = document.querySelector('a.nav-link-modern.cart-link[href$="/cart/"]');
+            if (!cartLink) return;
+            let badge = cartLink.querySelector('.cart-badge');
+            const total = parseInt(count || "0", 10);
+            if (!total || total < 1) {
+                if (badge) badge.remove();
+                return;
+            }
+            if (!badge) {
+                badge = document.createElement('span');
+                badge.className = 'cart-badge';
+                cartLink.appendChild(badge);
+            }
+            badge.textContent = String(total);
+        }
+
+        function setLoading(btn, isLoading) {
+            if (!btn) return;
+            if (isLoading) {
+                if (!btn.dataset.originalHtml) {
+                    btn.dataset.originalHtml = btn.innerHTML;
+                }
+                btn.innerHTML = LOADING_MESSAGE;
+                btn.disabled = true;
+                btn.setAttribute('aria-busy', 'true');
+            } else {
+                if (btn.dataset.originalHtml) {
+                    btn.innerHTML = btn.dataset.originalHtml;
+                    delete btn.dataset.originalHtml;
+                }
+                btn.disabled = false;
+                btn.removeAttribute('aria-busy');
+            }
+        }
+
+        document.addEventListener('submit', function (e) {
+            const form = e.target;
+            if (!form || !form.matches || !form.matches(CART_FORM_SELECTOR)) return;
+            if (form.dataset.ajaxDisabled === '1') return;
+            if (!window.fetch) return;
+
+            e.preventDefault();
+
+            const submitBtn = form.querySelector('button[type="submit"]') || form.querySelector('button');
+            setLoading(submitBtn, true);
+
+            const runSubmit = function () {
+                const formData = new FormData(form);
+                fetch(form.action, {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRFToken': getCookie('csrftoken'),
+                    },
+                    body: formData,
+                })
+                    .then(function (res) {
+                        if (!res.ok) {
+                            throw new Error('cart_add_failed');
+                        }
+                        return res.json();
+                    })
+                    .then(function (data) {
+                        if (data && typeof data.cart_count !== 'undefined') {
+                            updateCartBadge(data.cart_count);
+                        }
+                        showSuccessToast();
+                    })
+                    .catch(function () {
+                        form.dataset.ajaxDisabled = '1';
+                        form.submit();
+                    })
+                    .finally(function () {
+                        setLoading(submitBtn, false);
+                    });
+            };
+
+            showConfirmToast(runSubmit);
+        });
+    })();
+</script>

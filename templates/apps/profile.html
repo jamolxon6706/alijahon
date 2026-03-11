@@ -1,0 +1,478 @@
+{% extends 'apps/base/seller_base.html' %}
+
+{% block seller_base %}
+    <style>
+        .sidebar-modern {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            position: sticky;
+            top: 20px;
+        }
+
+        .user-profile-modern {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .user-profile-modern::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.4;
+        }
+
+        .user-avatar-modern {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            object-fit: cover;
+            position: relative;
+            z-index: 1;
+        }
+
+        .user-info-modern {
+            color: white;
+            margin-top: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .user-info-modern h6 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .user-info-modern p {
+            font-size: 13px;
+            opacity: 0.95;
+            margin-bottom: 4px;
+        }
+
+        .nav-modern {
+            padding: 10px 0;
+        }
+
+        .nav-modern .nav-item {
+            margin: 0;
+        }
+
+        .nav-modern .nav-link {
+            color: #64748b;
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            font-size: 15px;
+            border-left: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .nav-modern .nav-link i {
+            font-size: 20px;
+            margin-right: 12px;
+            width: 24px;
+            text-align: center;
+        }
+
+        .nav-modern .nav-link:hover,
+        .nav-modern .nav-link.active {
+            background: linear-gradient(90deg, rgba(102, 126, 234, 0.08) 0%, transparent 100%);
+            color: #667eea;
+            border-left-color: #667eea;
+        }
+
+    @media (max-width: 768px) {
+        .sidebar-modern {
+            margin-bottom: 20px;
+            position: static;
+        }
+
+            .user-profile-modern {
+                padding: 20px 15px;
+            }
+
+            .user-avatar-modern {
+                width: 80px;
+                height: 80px;
+            }
+
+            .user-info-modern h6 {
+                font-size: 16px;
+            }
+
+            .user-info-modern p {
+                font-size: 12px;
+            }
+
+            .nav-modern .nav-link {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+
+        .nav-modern .nav-link i {
+            font-size: 18px;
+            margin-right: 10px;
+        }
+    }
+
+    .settings-card {
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        padding: 24px;
+    }
+
+    .settings-card .form-group label {
+        font-weight: 600;
+        margin-bottom: 6px;
+    }
+
+    .settings-card .form-control {
+        border-radius: 999px;
+        border: 2px solid #e2e8f0;
+        padding: 10px 14px;
+        height: 48px;
+        line-height: 1.4;
+        background-color: #fff;
+    }
+
+    .settings-card select.form-control {
+        padding-right: 40px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border-radius: 999px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%2364728b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 14px center;
+        background-size: 12px;
+    }
+
+    .delete-modal {
+        border-radius: 20px;
+        border: 0;
+        box-shadow: 0 22px 60px rgba(15, 23, 42, 0.2);
+        overflow: hidden;
+    }
+
+    .delete-modal__header {
+        border-bottom: 1px solid #eef2f7;
+        background: linear-gradient(135deg, #fff 0%, #f8fafc 100%);
+        padding: 18px 22px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .delete-modal__title {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .delete-modal__title h5 {
+        margin: 0;
+        font-weight: 700;
+        color: #0f172a;
+    }
+
+    .delete-modal__title small {
+        color: #64748b;
+    }
+
+    .delete-modal__icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(239, 68, 68, 0.12);
+        color: #ef4444;
+        font-weight: 700;
+    }
+
+    .delete-modal__body {
+        padding: 20px 22px;
+        color: #334155;
+        font-size: 14px;
+    }
+
+    .delete-modal__footer {
+        border-top: 1px solid #eef2f7;
+        padding: 16px 22px;
+        gap: 10px;
+    }
+
+    .delete-otp-preview {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #f1f5ff;
+        border: 1px dashed #c7d2fe;
+        color: #1e3a8a;
+        padding: 10px 14px;
+        border-radius: 12px;
+        margin-bottom: 14px;
+        font-weight: 600;
+    }
+
+    .delete-otp-preview strong {
+        font-size: 18px;
+        letter-spacing: 2px;
+    }
+
+    .delete-otp-input {
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+        height: 48px;
+        font-size: 16px;
+        letter-spacing: 4px;
+        text-align: center;
+    }
+
+    @media (max-width: 768px) {
+        .settings-card {
+            padding: 18px;
+        }
+    }
+
+</style>
+    <div class="col-md-9">
+        <div class="settings-card">
+            <div class="settings-header">
+                <h3>Sozlamalar</h3>
+                <p>Profil ma'lumotlaringizni tahrirlang</p>
+            </div>
+            {% if messages %}
+                <div class="mb-3">
+                    {% for message in messages %}
+                        <div class="alert alert-danger py-2 mb-2">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form action="{% url 'profile' %}" method="post" novalidate="">
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger py-2 mb-3">
+                        {% for err in form.non_field_errors %}
+                            <div>{{ err }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="id_first_name">Ism:</label>
+                        <input type="text" name="first_name" value="{{ form.first_name.value|default:'' }}"
+                               maxlength="150"
+                               class="form-control" id="id_first_name">
+                        {% if form.first_name.errors %}
+                            <div class="text-danger small mt-1">{{ form.first_name.errors|striptags }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_last_name">Familiya:</label>
+                        <input type="text" name="last_name" value="{{ form.last_name.value|default:'' }}"
+                               maxlength="150"
+                               class="form-control" id="id_last_name">
+                        {% if form.last_name.errors %}
+                            <div class="text-danger small mt-1">{{ form.last_name.errors|striptags }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_phone_number">Telefon raqami:</label>
+                        <input type="text" name="phone_number" value="{{ form.phone_number.value|default:'' }}"
+                               maxlength="20"
+                               class="form-control" id="id_phone_number">
+                        {% if form.phone_number.errors %}
+                            <div class="text-danger small mt-1">{{ form.phone_number.errors|striptags }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_new_password">Yangi parol:</label>
+                        <input type="password" name="new_password" maxlength="128"
+                               class="form-control" id="id_new_password">
+                        {% if form.new_password.errors %}
+                            <div class="text-danger small mt-1">{{ form.new_password.errors|striptags }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_confirm_password">Yangi parolni tasdiqlang:</label>
+                        <input type="password" name="confirm_password" maxlength="128"
+                               class="form-control" id="id_confirm_password">
+                        {% if form.confirm_password.errors %}
+                            <div class="text-danger small mt-1">{{ form.confirm_password.errors|striptags }}</div>
+                        {% endif %}
+                    </div>
+                    <p class="text-muted small mb-0">Parolni o'zgartirmoqchi bo'lmasangiz, bo'sh qoldiring.</p>
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-save" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)">
+                        <i><img width="25" height="25" src="https://img.icons8.com/ios/100/untested.png" alt="untested"/></i> Saqlash
+                    </button>
+                </div>
+            </form>
+            <hr class="my-4">
+            <div class="d-flex flex-wrap gap-3 justify-content-between align-items-center">
+                <div>
+                    <h6 class="mb-1">Hisobni o'chirish</h6>
+                    <p class="text-muted small mb-0">Hisobingiz butunlay o'chiriladi va qayta tiklab bo'lmaydi.</p>
+                </div>
+                <button type="button" class="btn btn-outline-danger" data-toggle="modal"
+                        data-target="#deleteConfirmModal">
+                    Hisobni o'chirish
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmTitle"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content delete-modal">
+                <div class="modal-header delete-modal__header">
+                    <div class="delete-modal__title">
+                        <span class="delete-modal__icon">!</span>
+                        <div>
+                            <h5 class="modal-title" id="deleteConfirmTitle">Hisobni o'chirish</h5>
+                            <small>Bu amal qaytarib bo'lmaydi</small>
+                        </div>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body delete-modal__body">
+                    Haqiqatan ham hisobingizni o'chirmoqchimisiz? Tasdiqlasangiz, ma'lumotlaringiz o'chiriladi.
+                </div>
+                <div class="modal-footer delete-modal__footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Bekor qilish</button>
+                    <form action="{% url 'profile-delete-otp' %}" method="post" class="m-0">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Ha, davom etish</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="deleteOtpModal" tabindex="-1" role="dialog" aria-labelledby="deleteOtpTitle"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content delete-modal">
+                <form action="{% url 'profile-delete' %}" method="post" class="m-0">
+                    {% csrf_token %}
+                    <div class="modal-header delete-modal__header">
+                        <div class="delete-modal__title">
+                            <span class="delete-modal__icon">OTP</span>
+                            <div>
+                                <h5 class="modal-title" id="deleteOtpTitle">OTP tasdiqlash</h5>
+                                <small>Kodni kiriting</small>
+                            </div>
+                        </div>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body delete-modal__body">
+                        <p class="mb-2">Hisobingiz butunlay o'chiriladi va qayta tiklab bo'lmaydi.</p>
+                        {% if delete_otp %}
+                            <div class="delete-otp-preview">
+                                <span>Vaqtinchalik OTP</span>
+                                <strong>{{ delete_otp }}</strong>
+                            </div>
+                        {% else %}
+                            <div class="alert alert-warning py-2 text-center">
+                                OTP yuborilmagan. Iltimos, qayta urinib ko'ring.
+                            </div>
+                        {% endif %}
+                        <div class="form-group mb-0">
+                            <label>OTP kodi</label>
+                            <input type="text"
+                                   name="otp_code"
+                                   class="form-control delete-otp-input"
+                                   inputmode="numeric"
+                                   autocomplete="one-time-code"
+                                   placeholder="6 xonali kod"
+                                   maxlength="6"
+                                   required>
+                        </div>
+                    </div>
+                    <div class="modal-footer delete-modal__footer">
+                        <button type="button" class="btn btn-light" data-dismiss="modal">Bekor qilish</button>
+                        <button type="submit" class="btn btn-danger">Ha, o'chirish</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% comment %}
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const regionEl = document.getElementById("id_region");
+            const districtEl = document.getElementById("id_district");
+            if (!regionEl || !districtEl) return;
+
+            async function loadDistricts(regionId, selectedId = "") {
+                districtEl.innerHTML = '<option value="">---------</option>';
+                if (!regionId) return;
+
+                const res = await fetch(`/ajax/districts/${regionId}/`);
+                if (!res.ok) {
+                    console.error("district fetch error:", res.status);
+                    return;
+                }
+
+                const data = await res.json();
+
+                for (const d of data) {
+                    const opt = document.createElement("option");
+                    opt.value = d.id;
+                    opt.textContent = d.title;
+
+                    if (selectedId && String(d.id) === String(selectedId)) {
+                        opt.selected = true;
+                    }
+
+                    districtEl.appendChild(opt);
+                }
+            }
+
+            // ✅ 1) Sahifa ochilganda ham (oldingi qiymatni selected qilib) yuklasin
+            const selectedDistrictId = (districtEl.dataset.selected || "").trim();
+            if (regionEl.value) {
+                loadDistricts(regionEl.value, selectedDistrictId);
+            }
+
+            // ✅ 2) Region o'zgarsa districtlar yangilansin
+            regionEl.addEventListener("change", () => {
+                districtEl.dataset.selected = ""; // eski district endi mos emas
+                loadDistricts(regionEl.value, "");
+            });
+        });
+    </script>
+    {% endcomment %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const shouldShowOtp = {{ show_delete_otp|yesno:"true,false" }};
+            if (shouldShowOtp && typeof $ !== "undefined") {
+                $('#deleteOtpModal').modal('show');
+            }
+        });
+    </script>
+{% endblock %}

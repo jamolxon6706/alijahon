@@ -1,0 +1,882 @@
+{% extends 'apps/base/base.html' %}
+{% load static %}
+
+
+{% block body %}
+    <style>
+        /* ============================================================
+           BARCHA STILLAR FAQAT .alijahon-carousel ichida ishlaydi
+           Boshqa CSS lar bilan HECH QANDAY to'qnashuv bo'lmaydi
+           ============================================================ */
+
+        .alijahon-carousel,
+        .alijahon-carousel *,
+        .alijahon-carousel *::before,
+        .alijahon-carousel *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* ── Wrapper ── */
+        .alijahon-carousel {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* ── Track ── */
+        .alijahon-carousel__track {
+            display: flex;
+            transition: transform 0.65s cubic-bezier(0.77, 0, 0.18, 1);
+            width: 100%;
+        }
+
+        /* ── Slides ── */
+        .alijahon-carousel__slide {
+            min-width: 100%;
+            padding: 80px 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 360px;
+            position: relative;
+            overflow: hidden;
+            list-style: none;
+        }
+
+        /* Gradient overlay */
+        .alijahon-carousel__slide::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 30% 40%, rgba(255, 255, 255, 0.12) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        /* Slide colours */
+        .alijahon-carousel__slide--1 {
+            background: linear-gradient(135deg, #e8a020 0%, #c87d0a 100%);
+        }
+
+        .alijahon-carousel__slide--2 {
+            background: linear-gradient(135deg, #2e86de 0%, #1a5fb4 100%);
+        }
+
+        .alijahon-carousel__slide--3 {
+            background: linear-gradient(135deg, #27ae60 0%, #1a7d44 100%);
+        }
+
+        .alijahon-carousel__slide--4 {
+            background: linear-gradient(135deg, #9b59b6 0%, #6c3483 100%);
+        }
+
+        .alijahon-carousel__slide--5 {
+            background: linear-gradient(135deg, #e74c3c 0%, #a93226 100%);
+        }
+
+        /* ── Slide content ── */
+        .alijahon-carousel__title {
+            font-size: clamp(2rem, 5vw, 3.8rem);
+            font-weight: 900;
+            color: #ffffff !important;
+            letter-spacing: 1px;
+            line-height: 1.1;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            animation: alijahon-fadeUp 0.6s ease both;
+            text-decoration: none !important;
+            border: none !important;
+        }
+
+        .alijahon-carousel__subtitle {
+            margin-top: 18px;
+            font-size: clamp(0.95rem, 2vw, 1.25rem);
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.92) !important;
+            animation: alijahon-fadeUp 0.6s 0.12s ease both;
+            line-height: 1.5;
+        }
+
+        .alijahon-carousel__btn {
+            margin-top: 36px;
+            padding: 15px 44px;
+            background: #ffffff !important;
+            color: #222222 !important;
+            border: none !important;
+            border-radius: 50px !important;
+            font-family: 'Montserrat', sans-serif !important;
+            font-size: 1rem !important;
+            font-weight: 700 !important;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18) !important;
+            transition: transform 0.2s, box-shadow 0.2s !important;
+            animation: alijahon-fadeUp 0.6s 0.22s ease both;
+            text-decoration: none !important;
+            display: inline-block;
+            line-height: normal !important;
+            outline: none !important;
+        }
+
+        .alijahon-carousel__btn:hover {
+            transform: translateY(-3px) scale(1.03) !important;
+            box-shadow: 0 14px 32px rgba(0, 0, 0, 0.22) !important;
+            background: #ffffff !important;
+            color: #222222 !important;
+        }
+
+        @keyframes alijahon-fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(28px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ── Arrow buttons ── */
+        .alijahon-carousel__arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            width: 50px;
+            height: 50px;
+            border-radius: 50% !important;
+            border: 2px solid rgba(255, 255, 255, 0.5) !important;
+            background: rgba(255, 255, 255, 0.15) !important;
+            backdrop-filter: blur(6px);
+            color: #ffffff !important;
+            font-size: 1.6rem !important;
+            cursor: pointer;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            transition: background 0.25s, border-color 0.25s, transform 0.2s !important;
+            line-height: 1 !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            outline: none !important;
+            box-shadow: none !important;
+            font-family: inherit !important;
+        }
+
+        .alijahon-carousel__arrow:hover {
+            background: rgba(255, 255, 255, 0.35) !important;
+            border-color: #ffffff !important;
+            transform: translateY(-50%) scale(1.08) !important;
+        }
+
+        .alijahon-carousel__arrow--prev {
+            left: 20px;
+        }
+
+        .alijahon-carousel__arrow--next {
+            right: 20px;
+        }
+
+        /* ── Dots ── */
+        .alijahon-carousel__dots {
+            position: absolute;
+            bottom: 22px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex !important;
+            gap: 10px;
+            z-index: 10;
+            list-style: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+
+        .alijahon-carousel__dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50% !important;
+            background: rgba(255, 255, 255, 0.45) !important;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s, width 0.3s !important;
+            border: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            outline: none !important;
+            display: block;
+        }
+
+        .alijahon-carousel__dot.is-active {
+            background: #ffffff !important;
+            transform: scale(1.3);
+            border-radius: 6px !important;
+            width: 26px;
+        }
+
+        /* ── Progress bar ── */
+        .alijahon-carousel__progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.65);
+            width: 0%;
+            transition: width linear;
+            z-index: 10;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .alijahon-carousel__slide {
+                padding: 50px 40px;
+                min-height: 280px;
+            }
+        }
+
+        .hero-wrapper {
+            width: 100%;
+            padding: 10px 20px;
+        }
+
+        .alijahon-carousel {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        {#    ===================bu new product css ============#}
+        /* Yangi mahsulotlar carousel: kartalar balandligini cho'zib yubormasin */
+        /* ── Wrapper ── */
+        .np-section {
+            padding: 40px 0;
+        }
+
+        .np-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .np-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #111;
+            margin: 0;
+        }
+
+        .np-view-all {
+            color: #007bff;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-size: 14px;
+        }
+
+        .np-view-all:hover {
+            color: #0056b3;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        /* Carousel wrapper — overflow visible bo'lishi SHART (tugmalar uchun) */
+        .np-carousel-wrapper {
+            --np-arrow-offset: -48px;
+            position: relative;
+            padding: 0 56px;
+            overflow: visible !important;
+        }
+
+        .np-carousel-wrapper .owl-carousel {
+            position: relative !important;
+        }
+
+        /* ── Item gap ── */
+        .np-carousel-wrapper .owl-item .item {
+            padding: 4px 6px 8px;
+        }
+
+        /* ── Karta ── */
+        .np-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            /* Global .card stillarini bekor qil */
+            border: none !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+            transform: translateY(0) !important;
+            transition: box-shadow 0.25s ease, transform 0.25s ease !important;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .np-card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.13) !important;
+            transform: translateY(-4px) !important;
+        }
+
+        /* ── Rasm ── */
+        .np-card__img-wrap {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            overflow: hidden;
+            background: #f0f0f0;
+            flex-shrink: 0;
+        }
+
+        .np-card__img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.35s ease !important;
+        }
+
+        .np-card:hover .np-card__img {
+            transform: scale(1.06) !important;
+        }
+
+        /* ── Info ── */
+        .np-card__body {
+            padding: 12px 14px 14px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .np-card__name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #222;
+            margin: 0;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .np-card__name a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .np-card__name a:hover {
+            color: #1a73e8;
+        }
+
+        .np-card__price {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a73e8;
+            margin: 0;
+        }
+
+        /* ── Prev / Next tugmalar ── */
+        .np-carousel-wrapper .owl-nav {
+            display: block !important;
+            margin: 0 !important;
+            position: static !important;
+        }
+
+        .np-carousel-wrapper .owl-nav button {
+            position: absolute !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            width: 44px !important;
+            height: 44px !important;
+            border-radius: 50% !important;
+            background: #ffffff !important;
+            background-image: none !important;
+            border: 1px solid #e2e8f0 !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.14) !important;
+            color: #444 !important;
+            font-size: 24px !important;
+            font-weight: 300 !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            line-height: 1 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            cursor: pointer !important;
+            z-index: 50 !important;
+            outline: none !important;
+            /* Global .btn stillarini bekor qil */
+            transition: background 0.2s ease, box-shadow 0.2s ease !important;
+        }
+
+        .np-carousel-wrapper .owl-nav button:hover {
+            background: #f8fafc !important;
+            background-image: none !important;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2) !important;
+            transform: translateY(-50%) scale(1.05) !important;
+            color: #111 !important;
+        }
+
+        .np-carousel-wrapper .owl-nav button.owl-prev {
+            left: var(--np-arrow-offset) !important;
+            right: auto !important;
+        }
+
+        .np-carousel-wrapper .owl-nav button.owl-next {
+            right: var(--np-arrow-offset) !important;
+            left: auto !important;
+        }
+
+        .np-carousel-wrapper .owl-nav button.disabled {
+            opacity: 0.35 !important;
+            cursor: default !important;
+        }
+
+        /* Owl v1 (owl-buttons) uchun strelkalar */
+        .np-carousel-wrapper .owl-controls {
+            position: static !important;
+        }
+
+        .np-carousel-wrapper .owl-buttons {
+            display: block !important;
+        }
+
+        .np-carousel-wrapper .owl-buttons div {
+            position: absolute !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            width: 44px !important;
+            height: 44px !important;
+            border-radius: 50% !important;
+            background: #ffffff !important;
+            border: 1px solid #e2e8f0 !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.14) !important;
+            color: #444 !important;
+            font-size: 24px !important;
+            font-weight: 300 !important;
+            line-height: 1 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            cursor: pointer !important;
+            z-index: 50 !important;
+            transition: background 0.2s ease, box-shadow 0.2s ease !important;
+        }
+
+        .np-carousel-wrapper .owl-buttons div:hover {
+            background: #f8fafc !important;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2) !important;
+            transform: translateY(-50%) scale(1.05) !important;
+            color: #111 !important;
+        }
+
+        .np-carousel-wrapper .owl-buttons .owl-prev {
+            left: var(--np-arrow-offset) !important;
+        }
+
+        .np-carousel-wrapper .owl-buttons .owl-next {
+            right: var(--np-arrow-offset) !important;
+        }
+
+        .np-carousel-wrapper .owl-buttons .disabled {
+            opacity: 0.35 !important;
+            cursor: default !important;
+        }
+
+        /* Dots yashirin */
+        .np-carousel-wrapper .owl-dots {
+            display: none !important;
+        }
+
+        @media (max-width: 992px) {
+            .np-carousel-wrapper {
+                --np-arrow-offset: -36px;
+                padding: 0 44px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .np-carousel-wrapper {
+                --np-arrow-offset: -24px;
+                padding: 0 32px;
+            }
+
+            .np-carousel-wrapper .owl-nav button,
+            .np-carousel-wrapper .owl-buttons div {
+                width: 36px !important;
+                height: 36px !important;
+                font-size: 20px !important;
+            }
+
+            .np-carousel-wrapper .owl-nav button.owl-prev,
+            .np-carousel-wrapper .owl-buttons .owl-prev {
+                left: var(--np-arrow-offset) !important;
+            }
+
+            .np-carousel-wrapper .owl-nav button.owl-next,
+            .np-carousel-wrapper .owl-buttons .owl-next {
+                right: var(--np-arrow-offset) !important;
+            }
+        }
+
+        .cart-mini {
+            margin-top: 10px;
+        }
+
+        .cart-mini .btn {
+            width: 100%;
+        }
+
+        .categories-grid {
+            display: grid;
+            gap: 6px;
+            grid-template-columns: repeat(var(--cat-columns, 25), minmax(0, 1fr));
+        }
+
+        .categories-section .category-card {
+            padding: clamp(0.35rem, 0.5vw, 0.6rem);
+            border-radius: 12px;
+        }
+
+        .categories-section .category-image-wrapper {
+            width: clamp(34px, 2.6vw, 56px);
+            height: clamp(34px, 2.6vw, 56px);
+            margin-bottom: 0.4rem;
+        }
+
+        .categories-section .category-title {
+            font-size: clamp(0.58rem, 0.7vw, 0.75rem);
+            line-height: 1.1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        @media (max-width: 576px) {
+            .categories-grid {
+                gap: 4px;
+            }
+        }
+    </style>
+    {#<body style="background:#f0f0f0; display:flex; justify-content:center; align-items:center; min-height:100vh; padding:20px;">#}
+
+    <!--
+    =====================================================
+     FAQAT BU DIV NI O'Z SAYTINGIZGA QO'YING
+     CSS ham shu HTML fayldagi <style> tagidan oling
+    =====================================================
+    -->
+    <section class="hero-wrapper">
+        <div class="alijahon-carousel" id="myCarousel">
+
+            <!-- Track -->
+            <div class="alijahon-carousel__track" id="carouselTrack">
+
+                <div class="alijahon-carousel__slide alijahon-carousel__slide--1">
+                    <h2 class="alijahon-carousel__title">QULAY VA TEZ<br>YETKAZIB BERISH</h2>
+                    <p class="alijahon-carousel__subtitle">Toshkent bo'ylab 1 soatda yetkazib beramiz</p>
+                    <button class="alijahon-carousel__btn">Buyurtma berish</button>
+                </div>
+
+                <div class="alijahon-carousel__slide alijahon-carousel__slide--2">
+                    <h2 class="alijahon-carousel__title">KENG ASSORTIMENT<br>MAHSULOTLAR</h2>
+                    <p class="alijahon-carousel__subtitle">10 000 dan ortiq mahsulot bir joyda siz uchun</p>
+                    <button class="alijahon-carousel__btn">Katalogga o'tish</button>
+                </div>
+
+                <div class="alijahon-carousel__slide alijahon-carousel__slide--3">
+                    <h2 class="alijahon-carousel__title">MAXSUS CHEGIRMALAR<br>VA AKSIYALAR</h2>
+                    <p class="alijahon-carousel__subtitle">Har kuni yangi chegirmalar va foydali takliflar</p>
+                    <button class="alijahon-carousel__btn">Aksiyalarni ko'rish</button>
+                </div>
+
+                <div class="alijahon-carousel__slide alijahon-carousel__slide--4">
+                    <h2 class="alijahon-carousel__title">SIFATLI XIZMAT<br>KAFOLATI</h2>
+                    <p class="alijahon-carousel__subtitle">30 kun ichida qaytarish imkoniyati mavjud</p>
+                    <button class="alijahon-carousel__btn">Batafsil ma'lumot</button>
+                </div>
+
+                <div class="alijahon-carousel__slide alijahon-carousel__slide--5">
+                    <h2 class="alijahon-carousel__title">ILOVANI YUKLAB<br>OLING</h2>
+                    <p class="alijahon-carousel__subtitle">App Store va Google Play da mavjud — bepul!</p>
+                    <button class="alijahon-carousel__btn">Yuklab olish</button>
+                </div>
+
+            </div><!-- /track -->
+
+            <!-- Arrows -->
+            <button class="alijahon-carousel__arrow alijahon-carousel__arrow--prev" id="carouselPrev">&#8249;</button>
+            <button class="alijahon-carousel__arrow alijahon-carousel__arrow--next" id="carouselNext">&#8250;</button>
+
+            <!-- Dots -->
+            <div class="alijahon-carousel__dots" id="carouselDots"></div>
+
+            <!-- Progress bar -->
+            <div class="alijahon-carousel__progress" id="carouselProgress"></div>
+
+        </div>
+    </section>
+    <script>
+        (function () {
+            // ── Scope: IIFE — global o'zgaruvchilar bilan to'qnashmaydi ──
+            var INTERVAL = 4000;
+            var track = document.getElementById('carouselTrack');
+            var dotsWrap = document.getElementById('carouselDots');
+            var bar = document.getElementById('carouselProgress');
+            var slides = track.querySelectorAll('.alijahon-carousel__slide');
+            var total = slides.length;
+            var current = 0;
+            var timer = null;
+
+            /* Build dots */
+            for (var i = 0; i < total; i++) {
+                (function (idx) {
+                    var d = document.createElement('button');
+                    d.className = 'alijahon-carousel__dot' + (idx === 0 ? ' is-active' : '');
+                    d.setAttribute('aria-label', 'Slide ' + (idx + 1));
+                    d.addEventListener('click', function () {
+                        goTo(idx);
+                    });
+                    dotsWrap.appendChild(d);
+                })(i);
+            }
+
+            function updateDots() {
+                var dots = dotsWrap.querySelectorAll('.alijahon-carousel__dot');
+                dots.forEach(function (d, i) {
+                    d.classList.toggle('is-active', i === current);
+                });
+            }
+
+            function startBar() {
+                bar.style.transition = 'none';
+                bar.style.width = '0%';
+                bar.getBoundingClientRect(); // reflow
+                bar.style.transition = 'width ' + INTERVAL + 'ms linear';
+                bar.style.width = '100%';
+            }
+
+            function goTo(index) {
+                current = ((index % total) + total) % total;
+                track.style.transform = 'translateX(-' + (current * 100) + '%)';
+                updateDots();
+
+                /* Re-trigger fade animations */
+                var active = slides[current];
+                active.querySelectorAll('.alijahon-carousel__title, .alijahon-carousel__subtitle, .alijahon-carousel__btn').forEach(function (el) {
+                    el.style.animation = 'none';
+                    el.getBoundingClientRect();
+                    el.style.animation = '';
+                });
+
+                clearInterval(timer);
+                startBar();
+                timer = setInterval(function () {
+                    goTo(current + 1);
+                }, INTERVAL);
+            }
+
+            document.getElementById('carouselNext').addEventListener('click', function () {
+                goTo(current + 1);
+            });
+            document.getElementById('carouselPrev').addEventListener('click', function () {
+                goTo(current - 1);
+            });
+
+            /* Keyboard */
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'ArrowRight') goTo(current + 1);
+                if (e.key === 'ArrowLeft') goTo(current - 1);
+            });
+
+            /* Touch / Swipe */
+            var touchStartX = 0;
+            track.addEventListener('touchstart', function (e) {
+                touchStartX = e.touches[0].clientX;
+            }, {passive: true});
+            track.addEventListener('touchend', function (e) {
+                var diff = touchStartX - e.changedTouches[0].clientX;
+                if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
+            }, {passive: true});
+
+            /* Init */
+            goTo(0);
+        })();
+    </script>
+    <!-- Categories Grid Section -->
+    <section class="categories-section py-4">
+        <div class="container">
+            <div class="categories-grid" data-count="{{ categories|length }}">
+                {% for category in categories %}
+                    <a href="{% url 'product_list' category.id %}" class="category-card">
+                        <div class="category-image-wrapper">
+                            <img class="category-image" src="{{ category.photo_url.url }}"
+                                 alt="{{ category.title }}">
+                        </div>
+                        <h6 class="category-title">{{ category.title }}</h6>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <script>
+        (function () {
+            const grid = document.querySelector(".categories-grid");
+            if (!grid) return;
+
+            const count = parseInt(grid.dataset.count || "0", 10);
+
+            let resizeTimer = null;
+            function applyColumns() {
+                const safeCount = count > 0 ? count : 1;
+                const cols = Math.max(1, Math.min(25, safeCount));
+                grid.style.setProperty("--cat-columns", cols);
+            }
+
+            applyColumns();
+            window.addEventListener("resize", () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(applyColumns, 150);
+            });
+        })();
+    </script>
+
+    <!-- Best Sellers Section -->
+    <section class="products-section py-5 bg-light">
+        <div class="container">
+            <div class="section-header mb-4">
+                <h2 class="section-title">Siz uchun</h2>
+                <a href="{% url 'product_list' 0 %}" class="view-all-link">
+                    Barchasini ko'rish <i  class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="row g-4">
+                {% for product in products %}
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <div class="product-card">
+                            <button class="wishlist-btn{% if product.id in wishlist_ids %} is-active{% endif %}"
+                                    type="button"
+                                    aria-label="Sevimlilarga qo'shish"
+                                    aria-pressed="{% if product.id in wishlist_ids %}true{% else %}false{% endif %}"
+                                    data-product-id="{{ product.id }}">
+                                <i class="{% if product.id in wishlist_ids %}fas{% else %}far{% endif %} fa-heart"></i>
+                            </button>
+                            <a href="{% url 'product_detail' product.pk %}"
+                               class="product-image-link">
+                                <div class="product-image-wrapper">
+                                    {% if product.thumbnail_photo and product.thumbnail_photo.photo %}
+                                        <img class="product-image"
+                                             src="{{ product.thumbnail_photo.photo.url }}"
+                                             alt="{{ product.title }}"
+                                             loading="lazy">
+                                    {% else %}
+                                        <img class="product-image"
+                                             src="{% static 'apps/alijahon.png' %}"
+                                             alt="{{ product.title }}"
+                                             loading="lazy">
+                                    {% endif %}
+                                </div>
+                            </a>
+                            <div class="product-info">
+                                <h6 class="product-title">
+                                    <a href="{% url 'product_detail' product.pk %}">
+                                        {{ product.title }}
+                                    </a>
+                                </h6>
+                                <p class="product-price">{{ product.price }} so'm</p>
+                                <form action="{% url 'cart-add' %}" method="post" class="cart-mini">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="product" value="{{ product.id }}">
+                                    <input type="hidden" name="quantity" value="1">
+                                    <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                                    <button type="submit" class="btn btn-cart-mini">
+                                        Savatga qo'shish
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+
+            </div>
+        </div>
+    </section>
+
+    <!-- New Products Section -->
+    <!-- HTML -->
+    <section class="np-section">
+        <div class="container">
+
+            <div class="np-header">
+                <h2 class="np-title">Yangi mahsulotlar</h2>
+                <a href="{% url 'product_list' 0 %}" class="np-view-all">
+                    Barchasini ko'rish<i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="np-carousel-wrapper">
+                <div class="owl-carousel owl-new-products">
+
+                    {% for product in new_products %}
+                        <div class="item">
+                            <div class="np-card">
+                                <button class="wishlist-btn{% if product.id in wishlist_ids %} is-active{% endif %}"
+                                        type="button"
+                                        aria-label="Sevimlilarga qo'shish"
+                                        aria-pressed="{% if product.id in wishlist_ids %}true{% else %}false{% endif %}"
+                                        data-product-id="{{ product.id }}">
+                                    <i class="{% if product.id in wishlist_ids %}fas{% else %}far{% endif %} fa-heart"></i>
+                                </button>
+                                <a href="{% url 'product_detail' product.id %}">
+                                    <div class="np-card__img-wrap">
+                                        {% if product.thumbnail_photo and product.thumbnail_photo.photo %}
+                                            <img class="np-card__img"
+                                                 src="{{ product.thumbnail_photo.photo.url }}"
+                                                 alt="{{ product.title }}"
+                                                 loading="lazy">
+                                        {% else %}
+                                            <img class="np-card__img"
+                                                 src="{% static 'apps/alijahon.png' %}"
+                                                 alt="{{ product.title }}"
+                                                 loading="lazy">
+                                        {% endif %}
+                                    </div>
+                                </a>
+                                <div class="np-card__body">
+                                    <h6 class="np-card__name">
+                                        <a href="{% url 'product_detail' product.id %}">{{ product.title }}</a>
+                                    </h6>
+                                    <p class="np-card__price">{{ product.price }} so'm</p>
+                                    <form action="{% url 'cart-add' %}" method="post" class="cart-mini">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="product" value="{{ product.id }}">
+                                        <input type="hidden" name="quantity" value="1">
+                                        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                                        <button type="submit" class="btn btn-cart-mini">
+                                            Savatga qo'shish
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <div class="item">
+                            <p style="padding:20px;color:#999;">Yangi mahsulotlar topilmadi</p>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+{% endblock %}

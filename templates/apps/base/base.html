@@ -1,0 +1,903 @@
+{% load static %}
+
+
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>
+        Internet do'kon O'zbekiston bo'ylab bepul yetqazib berish - alijahon.uz
+    </title>
+    <!-- Favicon Icon -->
+    <link rel="icon" type="image/png" href="/static/apps/img/fav-icon.png">
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'apps/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Font Awesome-->
+    <link href="{% static 'apps/all.min.css' %}" rel="stylesheet">
+    <link href="{% static 'apps/icofont.min.css' %}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{% static 'apps/style.css' %}" rel="stylesheet">
+    <!-- Owl Carousel -->
+    <link rel="stylesheet" href="{% static 'apps/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'apps/owl.theme.css' %}">
+    <link rel="manifest" href="{% static 'apps/manifest.json' %}">
+
+    {#    =====  carusel link ==========#}
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet"/>
+    <!-- Modern UI Styles -->
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --primary-dark: #4338ca;
+            --primary-light: #818cf8;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #3b82f6;
+            --dark-bg: #1e293b;
+            --light-bg: #f8fafc;
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --card-shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        * {
+            transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f8fafc;
+            min-height: 100vh;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        .container {
+            max-width: 1400px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+        }
+
+        .card:hover {
+            box-shadow: var(--card-shadow-hover);
+            transform: translateY(-4px);
+        }
+
+        .btn {
+            border-radius: 12px;
+            padding: 10px 24px;
+            font-weight: 600;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cart-outline {
+            background: #ffffff;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-cart-outline:hover {
+            background: var(--primary-color);
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.25);
+        }
+
+        .btn-cart-mini {
+            background: #eef2ff;
+            color: var(--primary-color);
+            border: 1px solid #c7d2fe;
+            padding: 8px 10px;
+            font-size: 12px;
+            border-radius: 10px;
+        }
+
+        .btn-cart-mini:hover {
+            background: var(--primary-color);
+            color: #ffffff;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4);
+        }
+
+        .form-control, .form-select {
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            padding: 12px 16px;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .table {
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .table thead {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .card {
+                margin-bottom: 20px;
+            }
+
+            .btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .table {
+                font-size: 12px;
+            }
+
+            .col-md-3, .col-md-9 {
+                padding: 0 10px;
+            }
+        }
+
+
+    </style>
+
+
+    <link rel="stylesheet" href="{% static 'apps/index_style.css' %}">
+
+</head>
+<body>
+
+
+<style>
+    .modern-header {
+        background: white;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        z-index: 1000;
+    }
+
+    .modern-navbar {
+        padding: 0;
+    }
+
+    .navbar-brand-modern {
+        padding: 12px 0;
+    }
+
+    .navbar-brand-modern img {
+        height: 45px;
+        width: auto;
+        transition: transform 0.3s ease;
+    }
+
+    .navbar-brand-modern:hover img {
+        transform: scale(1.05);
+    }
+
+    .nav-link-modern {
+        padding: 20px 16px !important;
+        font-weight: 600;
+        color: #475569 !important;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .mega-toggle:focus,
+    .mega-toggle:active {
+        outline: none;
+        box-shadow: none;
+    }
+
+    .cart-link:focus,
+    .cart-link:focus-visible,
+    .cart-link:active {
+        outline: none;
+        box-shadow: none;
+    }
+
+    .account-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+    }
+
+    .account-toggle .account-icon {
+        font-size: 18px;
+    }
+
+    .account-toggle .account-caret {
+        font-size: 12px;
+        margin-left: 2px;
+    }
+
+    .nav-item.dropdown.mega-menu {
+        position: static;
+    }
+
+    .nav-item.dropdown.profile-dropdown-nav {
+        position: relative;
+    }
+
+    .nav-link-modern::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 3px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        transition: width 0.3s ease;
+    }
+
+    .nav-link-modern:hover,
+    .nav-link-modern.active {
+        color: #667eea !important;
+    }
+
+    .nav-link-modern:hover::after {
+        width: 80%;
+    }
+
+    .search-box-header {
+        position: relative;
+        width: 400px;
+        max-width: 100%;
+    }
+
+    .search-box-header input {
+        width: 100%;
+        padding: 10px 45px 10px 20px;
+        border: 2px solid #e2e8f0;
+        border-radius: 30px;
+        transition: all 0.3s ease;
+    }
+
+    .search-box-header input:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        outline: none;
+    }
+
+    .search-box-header button {
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        color: white;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .profile-dropdown-modern {
+        border-radius: 16px !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+        border: none !important;
+        padding: 8px 0;
+        margin-top: 0;
+        min-width: 250px;
+        right: 0 !important;
+        left: auto !important;
+    }
+
+    .profile-dropdown-nav .dropdown-menu {
+        display: none;
+    }
+
+    .profile-dropdown-nav:hover .dropdown-menu,
+    .profile-dropdown-nav .dropdown-menu.show {
+        display: block;
+    }
+
+    .dropdown-item-modern {
+        padding: 12px 24px;
+        font-weight: 500;
+        color: #475569;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .dropdown-item-modern i {
+        width: 20px;
+        font-size: 18px;
+        color: #667eea;
+    }
+
+    .dropdown-item-modern:hover {
+        background: linear-gradient(90deg, rgba(102, 126, 234, 0.08) 0%, transparent 100%);
+        color: #667eea;
+    }
+
+    .profile-pic-modern {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        border: 2px solid #667eea;
+        object-fit: cover;
+    }
+
+    .mega-dropdown-modern {
+        border-radius: 16px !important;
+        border: none !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+        padding: 30px 20px !important;
+        margin-top: 10px !important;
+        width: 90% !important;
+        max-width: 1200px !important;
+        left: 5% !important;
+        right: 5% !important;
+    }
+
+    .mega-list-modern {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .mega-list-modern a {
+        padding: 8px 12px;
+        color: #475569;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        font-size: 13px;
+        white-space: nowrap;
+        display: block;
+    }
+
+    .mega-list-modern a:hover {
+        background: linear-gradient(90deg, rgba(102, 126, 234, 0.08) 0%, transparent 100%);
+        color: #667eea;
+        transform: translateX(4px);
+    }
+
+    .dropdown-toggle::after {
+        display: none;
+    }
+
+    .navbar-toggler-modern {
+        border: 2px solid #667eea;
+        padding: 8px 12px;
+        border-radius: 8px;
+    }
+
+    .cart-link {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .cart-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 18px;
+        height: 18px;
+        padding: 0 6px;
+        border-radius: 999px;
+        background: #ef4444;
+        color: #ffffff;
+        font-size: 11px;
+        font-weight: 700;
+        line-height: 1;
+        margin-left: 4px;
+    }
+
+    .cart-toast-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.45);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 3000;
+        padding: 20px;
+        backdrop-filter: blur(2px);
+    }
+
+    .cart-toast-backdrop.is-visible {
+        display: flex;
+    }
+
+    .cart-toast {
+        background: #ffffff;
+        border-radius: 20px;
+        padding: 26px 28px 22px;
+        max-width: 380px;
+        width: 100%;
+        box-shadow: 0 22px 50px rgba(15, 23, 42, 0.22);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        animation: cart-toast-pop 0.25s ease-out;
+    }
+
+    .cart-toast::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(135deg, #6366f1 0%, #4338ca 100%);
+    }
+
+    .cart-toast-icon {
+        width: 54px;
+        height: 54px;
+        border-radius: 50%;
+        margin: 0 auto 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(16, 185, 129, 0.15);
+        color: #10b981;
+        font-size: 22px;
+    }
+
+    .cart-toast[data-variant="confirm"] .cart-toast-icon {
+        background: rgba(245, 158, 11, 0.15);
+        color: #f59e0b;
+    }
+
+    .cart-toast[data-variant="success"] .cart-toast-icon {
+        background: rgba(16, 185, 129, 0.15);
+        color: #10b981;
+    }
+
+    .cart-toast-title {
+        font-size: 17px;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 6px;
+    }
+
+    .cart-toast-sub {
+        margin: 0 0 18px;
+        font-size: 13px;
+        color: #64748b;
+    }
+
+    .cart-toast-actions {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .cart-toast-btn {
+        border-radius: 999px;
+        padding: 10px 18px;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .cart-toast-btn.primary {
+        background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+        color: #ffffff;
+        border: none;
+    }
+
+    .cart-toast-btn.ghost {
+        background: #eef2ff;
+        color: #4338ca;
+        border: 1px solid #c7d2fe;
+    }
+
+    @keyframes cart-toast-pop {
+        from {
+            opacity: 0;
+            transform: translateY(12px) scale(0.98);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    @media (max-width: 992px) {
+        .search-box-header {
+            width: 100%;
+            margin: 16px 0;
+        }
+
+        .nav-link-modern {
+            padding: 12px 16px !important;
+        }
+
+        .nav-link-modern::after {
+            display: none;
+        }
+
+        .mega-dropdown-modern {
+            min-width: 100% !important;
+            left: 0 !important;
+            transform: none !important;
+            padding: 16px !important;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .mega-dropdown-modern .row {
+            flex-direction: column;
+        }
+
+        .mega-dropdown-modern .col-lg-2 {
+            width: 100%;
+        }
+    }
+
+    {#    ==========#}
+    /* Custom mega menu (Bootstrapga bog'liq emas) */
+    .mega-menu-custom {
+        position: static;
+    }
+
+    .mega-toggle {
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    /* panel default yopiq */
+    .mega-panel {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 5%;
+        right: 5%;
+        width: 90%;
+        max-width: 1200px;
+        padding: 30px 20px;
+        margin-top: 0; /* bo'shliq yo'q */
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        z-index: 2000;
+    }
+
+    /* ochiq holat */
+    .mega-menu-custom.is-open .mega-panel {
+        display: block;
+    }
+
+    /* Mobil: panel static bo'lsin */
+    @media (max-width: 992px) {
+        .mega-panel {
+            position: static;
+            width: 100%;
+            left: 0;
+            right: 0;
+            max-width: 100%;
+            padding: 16px;
+            margin-top: 8px;
+            max-height: 55vh;
+            overflow-y: auto;
+        }
+    }
+
+
+    /* ===== Auth (Login/Register) bigger card ===== */
+    .auth-container {
+        max-width: 680px !important; /* 500 -> 680 */
+        width: 100%;
+        margin-top: 0 !important; /* 80px ni bekor qiladi */
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .auth-card {
+        padding: 48px !important; /* p-4 dan kattaroq */
+        border-radius: 18px;
+    }
+
+    .auth-title {
+        font-size: 26px;
+        font-weight: 800;
+        margin-bottom: 22px !important;
+    }
+
+    .auth-card label {
+        font-weight: 600;
+        margin-bottom: 6px;
+    }
+
+    .auth-input {
+        height: 54px;
+        font-size: 16px;
+        border-radius: 12px;
+    }
+
+    .auth-btn {
+        padding: 14px 18px;
+        font-size: 16px;
+        border-radius: 12px;
+    }
+
+
+    html, body {
+        height: 100%;
+        margin: 0;
+    }
+
+    body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .page-wrapper {
+        flex: 1; /* content bo‘sh bo‘lsa ham footer pastda qoladi */
+    }
+
+    body > .page-wrapper {
+        padding-top: 90px;
+    }
+
+    @media (max-width: 992px) {
+        body > .page-wrapper {
+            padding-top: 110px;
+        }
+    }
+
+    footer {
+        margin-top: auto;
+    }
+
+</style>
+
+<div class="modern-header">
+    <nav class="navbar navbar-expand-lg navbar-light modern-navbar">
+        <div class="container">
+            <a class="navbar-brand navbar-brand-modern" href="/">
+                <img src="{% static 'apps/alijahon.png' %}" alt="Alijahon.uz">
+            </a>
+
+            <button class="navbar-toggler navbar-toggler-modern" type="button" data-toggle="collapse"
+                    data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-modern" href="/">
+                            <i class="fa-solid fa-house"></i> Bosh sahifa
+                        </a>
+                    </li>
+                    <li class="nav-item mega-menu-custom">
+                        <button type="button" class="nav-link nav-link-modern mega-toggle" aria-expanded="false">
+                            <i class="fa-solid fa-bars"></i> Kategoriyalar
+                        </button>
+
+                        <div class="mega-panel" aria-hidden="true">
+                            <div class="row">
+                                <div class="col-lg-2 col-md-4 col-sm-6">
+                                    <div class="mega-list-modern">
+                                        {% for category in categories %}
+                                        	<a href="{% url 'product_list' category.id %}">{{ category.title }}</a>
+                                        {% endfor %}
+
+
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-2 col-md-4 col-sm-6">
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </li>
+
+
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-modern" href="/category">
+                            <i class="fa fa-store"></i> Do'kon
+                        </a>
+                    </li>
+                </ul>
+
+                <form action="{% url 'search' %}" method="GET" class="search-box-header" autocomplete="off">
+                    <input id="search-input" name="product" type="search" placeholder="Mahsulot qidirish..."
+                           value="{{ search_query|default:'' }}"/>
+                    <button type="submit">
+                        <i><img width="24" height="24" src="https://img.icons8.com/emoji/48/magnifying-glass-tilted-left-emoji.png" alt="magnifying-glass-tilted-left-emoji"/></i>
+                    </button>
+                </form>
+
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-modern cart-link" href="{% url 'cart' %}">
+                            <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                            <span>Savat</span>
+                            {% if cart_count %}
+                                <span class="cart-badge">{{ cart_count }}</span>
+                            {% endif %}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-modern cart-link" href="{% url 'wishlist' %}">
+                            <i class="fas fa-heart" aria-hidden="true"></i>
+                            <span>Sevimlilar</span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown profile-dropdown-nav">
+                        <button class="nav-link nav-link-modern dropdown-toggle account-toggle"
+                                type="button"
+                                id="accountDropdown"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false">
+                            <i class="fas fa-user-circle account-icon" aria-hidden="true"></i>
+                            <span>Account</span>
+                            <i class="fas fa-chevron-down account-caret" aria-hidden="true"></i>
+                        </button>
+
+                        <div class="dropdown-menu dropdown-menu-right profile-dropdown-modern"
+                             aria-labelledby="accountDropdown">
+                            {% if not user.is_authenticated %}
+                                <a class="dropdown-item dropdown-item-modern" href="{% url 'login' %}">
+                                    <i class="icofont-login"></i>
+                                    <span>Kirish</span>
+                                </a>
+                                <a class="dropdown-item dropdown-item-modern" href="{% url 'register' %}">
+                                    <i class="icofont-ui-user"></i>
+                                    <span>Ro'yxatdan o'tish</span>
+                                </a>
+                            {% else %}
+                                <a class="dropdown-item dropdown-item-modern" href="{% url 'profile' %}">
+                                    <i class="icofont-ui-user"></i>
+                                    <span>Profil</span>
+                                </a>
+                                <div class="dropdown-divider" style="margin: 8px 0;"></div>
+                                <a class="dropdown-item dropdown-item-modern" href="{% url 'logout' %}">
+                                    <i class="icofont-logout"></i>
+                                    <span>Chiqish</span>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+
+<div class="page-wrapper">
+    {% block body %}
+    {% endblock %}
+</div>
+
+{#mana shu joyga block yoziladi#}
+
+
+<style>
+    .modern-footer {
+        background: white;
+        border-top: 1px solid #e2e8f0;
+        padding: 0;
+        margin-top: auto;
+    }
+
+
+    .footer-copyright {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 24px 0;
+        color: white;
+    }
+
+    .copyright-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .copyright-text {
+        margin: 0;
+        font-size: 14px;
+    }
+
+    .copyright-text a {
+        color: white;
+        font-weight: 700;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .copyright-text a:hover {
+        opacity: 0.8;
+    }
+
+    .footer-links {
+        display: flex;
+        gap: 24px;
+        flex-wrap: wrap;
+    }
+
+    .footer-links a {
+        color: white;
+        text-decoration: none;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+
+    .footer-links a:hover {
+        opacity: 0.8;
+    }
+
+    @media (max-width: 768px) {
+
+
+        .footer-copyright {
+            padding: 20px 0;
+        }
+
+        .copyright-content {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .footer-links {
+            justify-content: center;
+        }
+    }
+</style>
+
+{% include 'apps/base/footer.html' %}
+
+{% include 'apps/base/script.html' %}
+</body>
+</html>
