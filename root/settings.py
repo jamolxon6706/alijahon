@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
+import os
 from os.path import join
 from pathlib import Path
 
@@ -18,11 +19,30 @@ from django.utils.translation import gettext_lazy as _
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+def _load_env(path: Path) -> None:
+    if not path.exists():
+        return
+    for raw_line in path.read_text(encoding="utf-8").splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        key = key.strip()
+        value = value.strip().strip('"').strip("'")
+        os.environ.setdefault(key, value)
+
+
+_load_env(BASE_DIR / ".env")
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&qj27pl9ivw0w6104zepl0^^@9p0^+0(ib%2znmm9k6v+j!l+b'
+SECRET_KEY = os.environ.get(
+    "DJANGO_SECRET_KEY",
+    "django-insecure-&qj27pl9ivw0w6104zepl0^^@9p0^+0(ib%2znmm9k6v+j!l+b",
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -85,11 +105,11 @@ WSGI_APPLICATION = 'root.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': "alijahon",
-        'HOST': "localhost",
-        'PORT': 5432,
-        'PASSWORD': 1,
-        'USER': "postgres"
+        'NAME': os.environ.get("DB_NAME"),
+        'HOST': os.environ.get("DB_HOST"),
+        'PORT': int(os.environ.get("DB_PORT")),
+        'PASSWORD': os.environ.get("DB_PASSWORD"),
+        'USER': os.environ.get("DB_USER"),
     }
 }
 
